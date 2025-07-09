@@ -5,12 +5,12 @@ import {
   deleteProduct,
 } from "../controllers/products.js";
 
-const router = express.Router();
+const productsRouter = express.Router();
 
-router.get("/", getProducts);
+productsRouter.get("/", getProducts);
 
-router.post("/", createProduct);
+productsRouter.post("/", createProduct);
 
-router.delete("/:productId", deleteProduct);
+productsRouter.delete("/:productId", deleteProduct);
 
-export default router;
+export default productsRouter;
