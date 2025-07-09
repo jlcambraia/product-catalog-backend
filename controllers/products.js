@@ -37,7 +37,7 @@ export const deleteProduct = async (req, res) => {
   const { productId } = req.params;
 
   try {
-    const deleted = await Produto.findById(productId);
+    const deleted = await Produto.findByIdAndDelete(productId);
 
     if (!deleted) {
       return res.status(404).send({ message: "Produto não encontrado" });
