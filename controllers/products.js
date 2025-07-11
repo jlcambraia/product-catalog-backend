@@ -48,3 +48,28 @@ export const deleteProduct = async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 };
+
+export const updateProductStock = async (req, res) => {
+  const { productId } = req.params;
+  const { stock } = req.body;
+
+  if (typeof stock !== "number" || stock < 0) {
+    return res.status(400).send({ message: "O estoque fornecido é inválido" });
+  }
+
+  try {
+    const updatedProduct = await Produto.findByIdAndUpdate(
+      productId,
+      { stock },
+      { new: true }
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).send({ message: "Produto não encontrado" });
+    }
+
+    res.send({ data: updatedProduct });
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
