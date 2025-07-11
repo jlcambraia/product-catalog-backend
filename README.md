@@ -27,6 +27,8 @@ Body (JSON):
 }
 ```
 
+---
+
 ### Deletar produto
 
 **DELETE** `/products/:productId`
@@ -44,9 +46,9 @@ Body (JSON):
 {
   "stock": 15
 }
+```
 
 Atualiza apenas o valor de stock do produto.
-```
 
 ---
 
