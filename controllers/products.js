@@ -51,22 +51,32 @@ export const deleteProduct = async (req, res) => {
 
 export const updateProductStock = async (req, res) => {
   const { productId } = req.params;
-  const { stock } = req.body;
+  let { stock } = req.body;
 
-  if (typeof stock !== "number" || stock < 0) {
-    return res.status(400).send({ message: "O estoque fornecido é inválido" });
+  stock = Number(stock);
+
+  if (isNaN(stock) || stock <= 0) {
+    return res
+      .status(400)
+      .send({ message: "Quantidade inválida para consumo." });
   }
 
   try {
-    const updatedProduct = await Produto.findByIdAndUpdate(
-      productId,
-      { stock },
-      { new: true }
-    );
+    const product = await Produto.findById(productId);
 
-    if (!updatedProduct) {
-      return res.status(404).send({ message: "Produto não encontrado" });
+    if (!product) {
+      return res.status(404).send({ message: "Produto não encontrado." });
     }
+
+    if (product.stock < stock) {
+      return res.status(400).send({
+        message: `Estoque insuficiente. Atual: ${product.stock}, solicitado: ${stock}`,
+      });
+    }
+
+    product.stock -= stock;
+
+    const updatedProduct = await product.save();
 
     res.send({ data: updatedProduct });
   } catch (err) {
