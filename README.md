@@ -37,18 +37,19 @@ Remove o produto com o ID especificado.
 
 ---
 
-### Atualizar estoque
+### Consumir estoque
 
 **PATCH** `/products/:productId/stock`  
 Body (JSON):
 
 ```json
 {
-  "stock": 15
+  "stock": 3
 }
 ```
 
-Atualiza apenas o valor de stock do produto.
+Esse valor será subtraído do estoque atual do produto.
+Por exemplo: se o produto possui 10 unidades e for enviado { "stock": 3 }, o estoque será atualizado para 7.
 
 ---
 
