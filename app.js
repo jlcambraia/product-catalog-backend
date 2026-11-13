@@ -9,12 +9,13 @@ import { errorHandler } from "./middlewares/errorHandler.js";
 
 dotenv.config();
 const { PORT = "3001", MONGO_URL, INTERNAL_API_KEY } = process.env;
-if (!MONGO_URL || !INTERNAL_API_KEY) throw new Error("MONGO_URL and INTERNAL_API_KEY must be configured");
+if (!MONGO_URL) throw new Error("MONGO_URL must be configured");
+if (!INTERNAL_API_KEY) console.warn("INTERNAL_API_KEY not set: product write endpoints are disabled (read-only demo)");
 
 const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.join(__dirname, "public")));
-app.use(cors({ methods: ["GET", "HEAD", "OPTIONS"], origin: false }));
+app.use(cors({ methods: ["GET", "HEAD", "OPTIONS"] }));
 app.use(express.json({ limit: "32kb" }));
 app.use("/products", productsRouter);
 app.use(errorHandler);
