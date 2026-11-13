@@ -6,16 +6,18 @@
   "scripts": {
     "dev": "node --watch app.js",
     "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "npx eslint ."
+    "test": "vitest run",
+    "lint": "eslint ."
   },
   "author": "João Luiz Cambraia",
   "license": "MIT",
-  "description": "API Backend do projeto product-catalog-with-filter-frontend, onde será possível criar os produtos, salvá-los em banco de dados, e pegar as informações salvas para renderização no Frontend",
+  "description": "Express and MongoDB REST API for product catalog and inventory management",
   "devDependencies": {
     "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.2"
+    "eslint-plugin-import": "^2.25.2",
+    "supertest": "^7.1.0",
+    "vitest": "^2.1.9"
   },
   "dependencies": {
     "cors": "^2.8.5",
