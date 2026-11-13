@@ -54,6 +54,14 @@ Allowed categories: `ACESSÓRIOS`, `MÓVEIS`, `ELETRÔNICOS`, `ROUPAS`, `OUTROS`
 
 The requested amount is **subtracted** from existing stock. For example, 10 units become 7 after consuming 3.
 
+## Read-only demo deployment
+
+The frontend demo reads real products but simulates creates, deletes, and stock changes in each visitor's browser. The backend **must not expose unauthenticated database writes**.
+
+On the `feature/admin-auth-phase1` branch, `GET /products` and static images remain publicly available. `POST`, `DELETE` and `PATCH` routes require the `X-Internal-API-Key` header matching `INTERNAL_API_KEY`. If the key is **not configured**, the server runs in **read-only mode**: write requests return `401`. This is the recommended configuration for the public portfolio demo.
+
+> The old `main` branch had unauthenticated write routes. Do not expose it as the public demo backend without deploying the protected changes first. The frontend API proxy alone does not protect direct access to the backend.
+
 ## Run locally
 
 Requires Node.js, npm, and MongoDB.
@@ -69,6 +77,8 @@ Create a `.env` file:
 ```env
 PORT=3001
 MONGO_URL=your_mongodb_connection_string
+# Optional: omit for a read-only public demo
+# INTERNAL_API_KEY=replace-with-a-long-random-secret
 ```
 
 Keep credentials out of version control.
